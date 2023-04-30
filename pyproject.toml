@@ -8,6 +8,7 @@ authors = ["yjinjo <yjinjo@berkeley.edu>"]
 python = "^3.11"
 Django = "^4.2"
 python-dotenv = "1.0"
+mysqlclient = "2.1.1"
 
 [tool.poetry.dev-dependencies]
 
