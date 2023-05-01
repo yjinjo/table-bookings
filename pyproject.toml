@@ -9,6 +9,7 @@ python = "^3.11"
 Django = "^4.2"
 python-dotenv = "1.0"
 mysqlclient = "2.1.1"
+Pillow = "9.5.0"
 
 [tool.poetry.dev-dependencies]
 
