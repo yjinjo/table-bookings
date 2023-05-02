@@ -4,6 +4,23 @@
 
 {% block content %}
     <section>
-        메인 뷰
+        <h4>추천 식당</h4>
+        <div class="row">
+            {% for item in recommendations %}
+                <div class="col-sm-3 mb-2 mt-2">
+                    <div class="card">
+                        <div class="card-header">{{ item.restaurant.category.name }}</div>
+                        <img src="{{ item.restaurant.main_image.image }}"
+                             alt="image"
+                             class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.restaurant.name }}</h5>
+                            <p class="card-text">{{ item.restaurant.address }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
     </section>
 {% endblock %}
