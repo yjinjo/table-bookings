@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 from web.views.main import IndexView
 from web.views.users import RegisterView, LoginView, LogoutView, VerificationView
@@ -11,4 +11,5 @@ urlpatterns = [
     path("login/", LoginView.as_view(), name="login"),
     path("logout/", LogoutView.as_view(), name="logout"),
     path("verify/", VerificationView.as_view(), name="verification"),
+    path("oauth/", include("allauth.urls")),
 ]
