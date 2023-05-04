@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from web.views.main import IndexView, SearchView, SearchJsonView
-from web.views.restaurant import RestaurantView
+from web.views.restaurant import RestaurantView, BookingView
 from web.views.users import RegisterView, LoginView, LogoutView, VerificationView
 
 urlpatterns = [
@@ -18,6 +18,11 @@ urlpatterns = [
         "restaurant/<int:restaurant_id>/",
         RestaurantView.as_view(),
         name="restaurant-view",
+    ),
+    path(
+        "restaurant/<int:restaurant_id>/booking/<int:seat_id>",
+        BookingView.as_view(),
+        name="booking",
     ),
     path("oauth/", include("allauth.urls")),
 ]
