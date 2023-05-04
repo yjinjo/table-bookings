@@ -19,7 +19,9 @@
                              alt="image"
                              class="card-img-top">
                         <div class="card-body">
-                            <h5 class="card-title">{{ item.restaurant.name }}</h5>
+                            <a href="{% url 'restaurant-view' item.restaurant_id %}">
+                                <h5 class="card-title item-name">{{ item.restaurant.name }}</h5>
+                            </a>
                             <p class="card-text">{{ item.restaurant.address }}</p>
                         </div>
                     </div>

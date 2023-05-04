@@ -59,16 +59,16 @@ class RestaurantTable(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
 
     class Weekday(models.TextChoices):
-        SUNDAY = "SUN", _("일요일")
         MONDAY = "MON", _("월요일")
         TUESDAY = "TUE", _("화요일")
         WEDNESDAY = "WEB", _("수요일")
         THURSDAY = "THU", _("목요일")
         FRIDAY = "FRI", _("금요일")
         SATURDAY = "SAT", _("토요일")
+        SUNDAY = "SUN", _("일요일")
 
     weekday = models.CharField(
-        max_length=3, choices=Weekday.choices, default=Weekday.SUNDAY
+        max_length=3, choices=Weekday.choices, default=Weekday.MONDAY
     )
     time = models.TimeField()
     available = models.IntegerField()
