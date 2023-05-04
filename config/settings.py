@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     # 3rd party apps
+    "corsheaders",
     ## all auth
     "allauth",
     "allauth.account",
@@ -56,6 +57,34 @@ INSTALLED_APPS = [
     "web",
 ]
 
+# 정책을 허용할 외부 도메인
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+]
+# CORS_ORIGIN_ALLOW_ALL = True  # 모든 도메인에서 허용
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "DELETE",
+    "OPTIONS",
+]
+
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-econding",
+    "authorization",
+    "content-type",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -64,6 +93,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 AUTHENTICATION_BACKENDS = [

@@ -130,6 +130,17 @@ requests = "*"
 requests-oauthlib = ">=0.3.0"
 
 [[package]]
+name = "django-cors-headers"
+version = "3.14.0"
+description = "django-cors-headers is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS)."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+Django = ">=3.2"
+
+[[package]]
 name = "django-ses"
 version = "3.4.1"
 description = "A Django email backend for Amazon's Simple Email Service"
@@ -357,7 +368,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.11"
-content-hash = "3dfef95d3c9ba646f7c3e0d0a662bb1d5840435acb1749476841c66a7b829717"
+content-hash = "6ba415ffd87c115ca966cf00a290c519873b8e7669e2b0d9f3ec46a08140e0fc"
 
 [metadata.files]
 asgiref = [
@@ -550,6 +561,10 @@ django = [
 ]
 django-allauth = [
     {file = "django-allauth-0.54.0.tar.gz", hash = "sha256:120e265f802b65738899c6cb627b827fde46a4d03067034c633f516c2adf3e3e"},
+]
+django-cors-headers = [
+    {file = "django_cors_headers-3.14.0-py3-none-any.whl", hash = "sha256:684180013cc7277bdd8702b80a3c5a4b3fcae4abb2bf134dceb9f5dfe300228e"},
+    {file = "django_cors_headers-3.14.0.tar.gz", hash = "sha256:5fbd58a6fb4119d975754b2bc090f35ec160a8373f276612c675b00e8a138739"},
 ]
 django-ses = [
     {file = "django_ses-3.4.1-py3-none-any.whl", hash = "sha256:3e798fbb4507664c6160b3c5ed6daafb94781cecd965601a3e002eccdd224f7f"},
