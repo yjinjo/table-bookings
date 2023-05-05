@@ -107,7 +107,7 @@ class RestaurantView(TemplateView):
         }
 
 
-class BookingView(LoginRequiredMixin, TemplateView):
+class RestaurantBookingView(LoginRequiredMixin, TemplateView):
     template_name = "restaurant/book.html"
     login_url = reverse_lazy("login")
 
@@ -162,7 +162,7 @@ class BookingView(LoginRequiredMixin, TemplateView):
         return JsonResponse({}, safe=False)
 
 
-class PayView(LoginRequiredMixin, TemplateView):
+class RestaurantPayView(LoginRequiredMixin, TemplateView):
     """연동을 다 끝내고 나서 카드사 인증을 거친 뒤의 내 웹 사이트의 결제 인증 과정"""
 
     template_name = "restaurant/confirm.html"

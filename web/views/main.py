@@ -1,8 +1,9 @@
+from django.db.models import Avg
 from django.http import JsonResponse
 from django.views import View
 from django.views.generic import TemplateView
 
-from web.models import Recommendation
+from web.models import Recommendation, Restaurant
 from web.views.service.search import RestaurantSearch
 
 
@@ -16,8 +17,18 @@ class IndexView(TemplateView):
             .select_related("restaurant")
             .all()[:4]
         )
+        latest = Restaurant.objects.order_by("-created_at")[:4]
+        hottest = (
+            Restaurant.objects.annotate(average_ratings=Avg("review__ratings"))
+            .filter(average_ratings__gte=0)
+            .order_by("-average_ratings")[:4]
+        )
 
-        return {"recommendations": recommendations}
+        return {
+            "recommendations": recommendations,
+            "latest": latest,
+            "hottest": hottest,
+        }
 
 
 class SearchView(TemplateView, RestaurantSearch):
