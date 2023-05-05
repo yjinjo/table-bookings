@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.views import View
 from django.views.generic import ListView
 
-from web.models import Booking
+from web.models import Booking, PayHistory
 
 
 class BookingHistoryView(ListView):
@@ -47,5 +47,6 @@ class BookingCancelView(View):
                 booking.seat.remain += 1
                 booking.save()
                 booking.seat.save()
+                PayHistory.objects.create(booking=booking, amount=-booking.price)
 
         return redirect("history")

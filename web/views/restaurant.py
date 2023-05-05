@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
+from django.db.models import Avg
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -19,6 +20,8 @@ from web.models import (
     RestaurantImage,
     AvailableSeat,
     Booking,
+    Review,
+    PayHistory,
 )
 from web.utils import convert_weekday
 
@@ -63,6 +66,14 @@ class RestaurantView(TemplateView):
         images = RestaurantImage.objects.filter(restaurant=restaurant).all()
         # 리스트로 바로 변환한 이유는 아래에서 pickling 하기 위함
         tables = list(RestaurantTable.objects.filter(restaurant=restaurant).all())
+        reviews = (
+            Review.objects.filter(restaurant=restaurant)
+            .all()
+            .order_by("-created_at")[:20]
+        )
+        ratings = (
+            Review.objects.filter(restaurant=restaurant).all().aggregate(Avg("ratings"))
+        )
 
         # 예약은 내일 부터 ~ 10일치만 가능한 시스템으로 구현
         slots = []
@@ -91,6 +102,8 @@ class RestaurantView(TemplateView):
             "restaurant": restaurant,
             "images": images,
             "slots": slots,
+            "reviews": reviews,
+            "ratings": ratings,
         }
 
 
@@ -185,6 +198,7 @@ class PayView(LoginRequiredMixin, TemplateView):
                 if response.ok:  # status_code == 200
                     booking.status = Booking.PayStatus.PAID
                     booking.paid_at = timezone.now()
+                    PayHistory.objects.create(booking=booking, amount=booking.price)
                 else:  # 실패할 경우 기존 데이터를 그대로 저장합니다.
                     booking.status = Booking.PayStatus.FAILED
                 booking.save()

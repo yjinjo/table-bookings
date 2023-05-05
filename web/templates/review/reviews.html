@@ -3,46 +3,36 @@
 {% load booking_tags %}
 {% load humanize %}
 
-{% block title %}예약 내역{% endblock %}
+{% block title %}리뷰 내역{% endblock %}
 
 {% block content %}
     <div class="row g-4 mt-2">
         <div class="col-12 list-group">
             {% for item in object_list %}
                 <div class="list-group-item list-group-item-action">
-                    <span class="badge badge-primary">{{ item.status|convert_status_korean }}</span>
-                    <br>
-                    예약번호: {{ item.order_number }}
-                    <br>
-                    예약일자: {{ item.seat.datetime|date:'Y년 m월 d일 H시 i분' }}
+                    <span class="badge badge-primary">{{ item.ratings }}</span>
                     <br>
                     식당: {{ item.restaurant.name }}
                     <br>
                     주소: {{ item.restaurant.address }}
                     <br>
-                    결제시각: {{ item.paid_at|date:'Y년 m월 d일 H시 i분' }}
+                    작성일자: {{ item.created_at|date:'Y년 m월 d일 H시 i분' }}
                     <br>
-                    결제금액: {{ item.price|floatformat:0|intcomma }}원
+                    코멘트: {{ item.comment }}
                     <br>
-
-                    {% if item.status == 'PAID' %}
-                        <div class="mt-4 float-right">
-                            <a href="{% url 'cancel' item.id %}">
-                                <button class="btn btn-danger">예약 취소</button>
-                            </a>
-
-                            {% if item|is_available_review %}
-                                <a href="{% url 'review-create' item.id %}">
-                                    <button class="btn btn-info">리뷰 작성</button>
-                                </a>
-                            {% endif %}
-                        </div>
-                    {% endif %}
+                    <div class="mt-4 float-right">
+                        <a href="{% url 'review-update' item.id %}">
+                            <button class="btn btn-info">수정</button>
+                        </a>
+                        <a href="{% url 'review-delete' item.id %}">
+                            <button class="btn btn-danger">삭제</button>
+                        </a>
+                    </div>
                 </div>
             {% endfor %}
         </div>
     </div>
- 
+
     <div class="row mt-4">
         <nav class="col-12">
             <ul class="pagination justify-content-center">
