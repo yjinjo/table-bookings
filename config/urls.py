@@ -1,9 +1,18 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
 from web.views.main import IndexView, SearchView, SearchJsonView
 from web.views.restaurant import RestaurantView, BookingView, PayView
-from web.views.users import RegisterView, LoginView, LogoutView, VerificationView
+from web.views.users import (
+    RegisterView,
+    LoginView,
+    LogoutView,
+    VerificationView,
+    ProfileView,
+    PasswordView,
+)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -12,6 +21,8 @@ urlpatterns = [
     path("login/", LoginView.as_view(), name="login"),
     path("logout/", LogoutView.as_view(), name="logout"),
     path("verify/", VerificationView.as_view(), name="verification"),
+    path("profile/", ProfileView.as_view(), name="profile"),
+    path("password/", PasswordView.as_view(), name="password"),
     path("search/", SearchView.as_view(), name="search"),
     path("search/json/", SearchJsonView.as_view(), name="search-json"),
     path(
@@ -26,4 +37,4 @@ urlpatterns = [
     ),
     path("restaurant/confirm/<str:status>", PayView.as_view(), name="payment"),
     path("oauth/", include("allauth.urls")),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

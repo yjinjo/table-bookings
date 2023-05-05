@@ -1,11 +1,17 @@
+import uuid
+
+from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    nickname = models.CharField(null=False, max_length=20)
+    nickname = models.CharField(null=False, max_length=30)
     profile_image = models.ImageField(upload_to="uploads/%Y/%m/%d/", null=True)
     verified = models.BooleanField(default=False)
 
@@ -137,3 +143,28 @@ class PayHistory(models.Model):
     booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=12, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True, null=False)
+
+
+class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):
+    def populate_user(self, request, sociallogin, data):
+        user = super().populate_user(request, sociallogin, data)
+        user.username = user.email[:30]  # 필드 자체가 30 까지 밖에 못들어가므로
+        if User.objects.filter(username=user.username).exists():
+            # 만약 이메일이 이미 존재한다면 uuid4를 이용해서 고유한 usernmae으로 만들기
+            user.username = str(uuid.uuid4())
+        return user
+
+
+@receiver(post_save, sender=User)
+def on_save_user(sender, instance, **kwargs):
+    profile = UserProfile.objects.filter(user=instance).first()
+    social_account = SocialAccount.objects.filter(user=instance).first()
+
+    # 일반 로그인이 아닌 소셜 계정으로 로그인되었을 시
+    if profile is None and social_account is not None:
+        nickname = instance.email.split("@")[0]
+        UserProfile.objects.create(
+            user=instance,
+            nickname=nickname,
+            profile_image=None,
+        )

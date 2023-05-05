@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     # 3rd party apps
     "corsheaders",
+    "crispy_forms",
+    "crispy_bootstrap5",
     ## all auth
     "allauth",
     "allauth.account",
@@ -121,7 +123,6 @@ TEMPLATES = [
         },
     },
 ]
-
 WSGI_APPLICATION = "config.wsgi.application"
 
 
@@ -209,3 +210,10 @@ SOCIALACCOUNT_PROVIDERS = {
         },
     },
 }
+
+SOCIALACCOUNT_ADAPTER = "web.models.CustomSocialAccountAdapter"
+ACCOUNT_UNIQUE_EMAIL = False
+
+# crispy
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
