@@ -3,6 +3,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from web.views.history import BookingHistoryView
 from web.views.main import IndexView, SearchView, SearchJsonView
 from web.views.restaurant import RestaurantView, BookingView, PayView
 from web.views.users import (
@@ -36,5 +37,6 @@ urlpatterns = [
         name="booking",
     ),
     path("restaurant/confirm/<str:status>", PayView.as_view(), name="payment"),
+    path("history", BookingHistoryView.as_view(), name="history"),
     path("oauth/", include("allauth.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
