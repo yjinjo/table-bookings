@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from web.views.main import IndexView, SearchView, SearchJsonView
-from web.views.restaurant import RestaurantView, BookingView
+from web.views.restaurant import RestaurantView, BookingView, PayView
 from web.views.users import RegisterView, LoginView, LogoutView, VerificationView
 
 urlpatterns = [
@@ -24,5 +24,6 @@ urlpatterns = [
         BookingView.as_view(),
         name="booking",
     ),
+    path("restaurant/confirm/<str:status>", PayView.as_view(), name="payment"),
     path("oauth/", include("allauth.urls")),
 ]
