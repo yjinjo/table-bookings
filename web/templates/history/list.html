@@ -27,7 +27,9 @@
 
                     {% if item.status == 'PAID' %}
                         <div class="mt-4 float-right">
-                            <button class="btn btn-danger">예약 취소</button>
+                            <a href="{% url 'cancel' item.id %}">
+                                <button class="btn btn-danger">예약 취소</button>
+                            </a>
                         </div>
                     {% endif %}
                 </div>
