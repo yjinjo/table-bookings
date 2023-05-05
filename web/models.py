@@ -44,6 +44,7 @@ class Restaurant(models.Model):
     main_image = models.ForeignKey(
         "RestaurantImage",
         related_name="main_image",
+        null=True,
         on_delete=models.CASCADE,
         verbose_name=_("메인 이미지"),
     )

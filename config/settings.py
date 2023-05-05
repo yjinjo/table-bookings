@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.kakao",
     # local apps
     "web",
+    "office",
 ]
 
 # 정책을 허용할 외부 도메인
