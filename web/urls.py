@@ -1,4 +1,3 @@
-from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
 
 from web.views.booking import BookingHistoryView, BookingCancelView
@@ -14,7 +13,14 @@ from web.views.reviews import (
     ReviewUpdateView,
     ReviewDeleteView,
 )
-from web.views.users import RegisterView, VerificationView, ProfileView, PasswordView
+from web.views.users import (
+    RegisterView,
+    VerificationView,
+    ProfileView,
+    PasswordView,
+    LoginView,
+    LogoutView,
+)
 
 urlpatterns = [
     # main

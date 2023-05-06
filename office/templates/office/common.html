@@ -1,4 +1,6 @@
 {% load static %}
+{% load permission_tags %}
+
 <!DOCTYPE html>
 <html lang="ko">
     <head>
@@ -34,14 +36,15 @@
                     <a href="{% url 'office-index' %}"><span class="navbar-brand mb-0 h1">관리자</span></a>
 
                     <ul class="nav justify-content-end">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'office-restaurant-list' %}">식당</a>
-                        </li>
+                        {% if user|is_manager %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'office-restaurant-list' %}">식당</a>
+                            </li>
+                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'office-booking-list' %}">예약</a>
                         </li>
                     </ul>
-
                 </div>
             </nav>
 
