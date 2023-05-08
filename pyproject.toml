@@ -15,6 +15,7 @@ django-allauth = "^0.54.0"
 django-cors-headers = "^3.14.0"
 django-crispy-forms = "^2.0"
 crispy-bootstrap5 = "^0.7"
+django-redis-sessions = "^0.6.2"
 
 [tool.poetry.dev-dependencies]
 

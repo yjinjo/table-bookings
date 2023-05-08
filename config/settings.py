@@ -218,3 +218,15 @@ ACCOUNT_UNIQUE_EMAIL = False
 # crispy
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+# session
+SESSION_ENGINE = "redis_sessions.session"
+SESSION_REDIS = {
+    "host": os.environ.get("SESSION_REDIS_HOST"),
+    "port": os.environ.get("SESSION_REDIS_PORT"),
+    "db": 0,
+    "prefix": "session",
+    "socket_timeout": 1,
+    "retry_on_timeout": False,
+    "password": os.environ.get("SESSION_REDIS_PASSWORD"),
+}

@@ -10,6 +10,14 @@ python-versions = ">=3.7"
 tests = ["pytest", "pytest-asyncio", "mypy (>=0.800)"]
 
 [[package]]
+name = "async-timeout"
+version = "4.0.2"
+description = "Timeout context manager for asyncio programs"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[[package]]
 name = "boto3"
 version = "1.26.123"
 description = "The AWS SDK for Python"
@@ -167,6 +175,17 @@ python-versions = ">=3.7"
 django = ">=3.2"
 
 [[package]]
+name = "django-redis-sessions"
+version = "0.6.2"
+description = "Redis Session Backend For Django"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+redis = ">=2.4.10"
+
+[[package]]
 name = "django-ses"
 version = "3.4.1"
 description = "A Django email backend for Amazon's Simple Email Service"
@@ -303,6 +322,21 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "redis"
+version = "4.5.4"
+description = "Python client for Redis database and key-value store"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+async-timeout = {version = ">=4.0.2", markers = "python_version <= \"3.11.2\""}
+
+[package.extras]
+hiredis = ["hiredis (>=1.0.0)"]
+ocsp = ["cryptography (>=36.0.1)", "pyopenssl (==20.0.1)", "requests (>=2.26.0)"]
+
+[[package]]
 name = "requests"
 version = "2.29.0"
 description = "Python HTTP for Humans."
@@ -394,12 +428,16 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.11"
-content-hash = "49e05f326034c2d83238690e30a88fdb3cd1ad9319a0182f8ca86b840c1916a7"
+content-hash = "5222f3e10cf2b48c29ddba911a6c3d4dfbeb729f0991c7efa66f12456bc5cdc8"
 
 [metadata.files]
 asgiref = [
     {file = "asgiref-3.6.0-py3-none-any.whl", hash = "sha256:71e68008da809b957b7ee4b43dbccff33d1b23519fb8344e33f049897077afac"},
     {file = "asgiref-3.6.0.tar.gz", hash = "sha256:9567dfe7bd8d3c8c892227827c41cce860b368104c3431da67a0c5a65a949506"},
+]
+async-timeout = [
+    {file = "async-timeout-4.0.2.tar.gz", hash = "sha256:2163e1640ddb52b7a8c80d0a67a08587e5d245cc9c553a74a847056bc2976b15"},
+    {file = "async_timeout-4.0.2-py3-none-any.whl", hash = "sha256:8ca1e4fcf50d07413d66d1a5e416e42cfdf5851c981d679a09851a6853383b3c"},
 ]
 boto3 = [
     {file = "boto3-1.26.123-py3-none-any.whl", hash = "sha256:2ccb1827dc9d654970375b9bbe1bd77eb6a50ec6fa76cf227a34b4bff144814f"},
@@ -600,6 +638,10 @@ django-crispy-forms = [
     {file = "django-crispy-forms-2.0.tar.gz", hash = "sha256:90193b068bf948d9c68449bc8260afed1a8e2afe11ee0bac8c4ebfaeb175b322"},
     {file = "django_crispy_forms-2.0-py3-none-any.whl", hash = "sha256:d1d4e585929058a9ab3b797666ea5b69320b9ba7937f9d146d32173246a6fd13"},
 ]
+django-redis-sessions = [
+    {file = "django-redis-sessions-0.6.2.tar.gz", hash = "sha256:ba33ecca198f28ddc32d9f03742dc8dfc34c1857b789c75ea8425d6d7d7376be"},
+    {file = "django_redis_sessions-0.6.2-py3-none-any.whl", hash = "sha256:13b645a4fad4352c111057e44d0987a3163116b0a2f8b141c7d8abe0cab446c9"},
+]
 django-ses = [
     {file = "django_ses-3.4.1-py3-none-any.whl", hash = "sha256:3e798fbb4507664c6160b3c5ed6daafb94781cecd965601a3e002eccdd224f7f"},
     {file = "django_ses-3.4.1.tar.gz", hash = "sha256:900b4c27a8fdebf93f2f583b8ed1171d6cfd67c5aa796a5dd39358780652c257"},
@@ -716,6 +758,10 @@ python3-openid = [
 pytz = [
     {file = "pytz-2023.3-py2.py3-none-any.whl", hash = "sha256:a151b3abb88eda1d4e34a9814df37de2a80e301e68ba0fd856fb9b46bfbbbffb"},
     {file = "pytz-2023.3.tar.gz", hash = "sha256:1d8ce29db189191fb55338ee6d0387d82ab59f3d00eac103412d64e0ebd0c588"},
+]
+redis = [
+    {file = "redis-4.5.4-py3-none-any.whl", hash = "sha256:2c19e6767c474f2e85167909061d525ed65bea9301c0770bb151e041b7ac89a2"},
+    {file = "redis-4.5.4.tar.gz", hash = "sha256:73ec35da4da267d6847e47f68730fdd5f62e2ca69e3ef5885c6a78a9374c3893"},
 ]
 requests = [
     {file = "requests-2.29.0-py3-none-any.whl", hash = "sha256:e8f3c9be120d3333921d213eef078af392fba3933ab7ed2d1cba3b56f2568c3b"},
