@@ -139,6 +139,7 @@ DATABASES = {
         "NAME": os.environ.get("DATABASES_NAME"),
         "USER": os.environ.get("DATABASES_USER"),
         "PASSWORD": os.environ.get("DATABASES_PASSWORD"),
+        "TEST": {"NAME": "tablebooking_test"},
     }
 }
 
