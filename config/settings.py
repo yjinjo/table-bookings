@@ -230,3 +230,11 @@ SESSION_REDIS = {
     "retry_on_timeout": False,
     "password": os.environ.get("SESSION_REDIS_PASSWORD"),
 }
+
+# cache
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": f"redis://:{os.environ.get('SESSION_REDIS_PASSWORD')}@{os.environ.get('SESSION_REDIS_HOST')}:{os.environ.get('SESSION_REDIS_PORT')}",
+    }
+}

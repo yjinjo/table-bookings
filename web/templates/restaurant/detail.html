@@ -1,6 +1,7 @@
 {% extends "common.html" %}
 {% load static %}
 {% load humanize %}
+{% load cache %}
 
 {% block title %}Table Booking{% endblock %}
 
@@ -72,6 +73,7 @@
                     후기
                     {% if ratings.ratings__avg %}⭐️{{ ratings.ratings__avg }}{% endif %}
                 </h6>
+                {% cache 60 detail-reviews restaurant.id %}
                 <div class="list-group">
                     {% if reviews %}
                         {% for review in reviews %}
@@ -84,7 +86,8 @@
                         <div class="list-group-item list-group-item-action">후기가 없습니다.</div>
                     {% endif %}
                 </div>
-            </div>
+            {% endcache %}
         </div>
-    </section>
+    </div>
+</section>
 {% endblock %}

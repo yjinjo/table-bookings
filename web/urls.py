@@ -24,6 +24,7 @@ from web.views.users import (
 
 urlpatterns = [
     # main
+    # path("", cache_page(60 * 15)(IndexView.as_view()), name="index"),
     path("", IndexView.as_view(), name="index"),
     # user
     path("register/", RegisterView.as_view(), name="register"),
