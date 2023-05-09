@@ -5,7 +5,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 
-from web.models import Restaurant, Category
+from web.models import Restaurant
 
 
 class RestaurantSearch:
