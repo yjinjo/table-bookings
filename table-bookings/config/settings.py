@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "crispy_forms",
     "crispy_bootstrap5",
+    "storages",
     ## all auth
     "allauth",
     "allauth.account",
@@ -178,11 +179,23 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_S3_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_S3_SECRET_ACCESS_KEY")
+AWS_SES_REGION_NAME = os.environ.get("AWS_SES_REGION_NAME")
+
+AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_CUSTOM_DOMAIN = "%s.s3.amazonaws.com" % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
+AWS_DEFAULT_ACL = "public-read"
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+STATIC_URL = "https://%s/static/" % AWS_S3_CUSTOM_DOMAIN
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = "media"
+# MEDIA_URL = "/media/"
+# MEDIA_ROOT = "media"
+DEFAULT_FILE_STORAGE = "config.configs.MediaStorage"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -191,9 +204,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Email
 EMAIL_BACKEND = "django_ses.SESBackend"
-AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
-AWS_SES_REGION_NAME = os.environ.get("AWS_SES_REGION_NAME")
 AWS_SES_REGION_ENDPOINT = os.environ.get("AWS_SES_REGION_ENDPOINT")
 
 # All auth
