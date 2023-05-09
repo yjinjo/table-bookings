@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
     "storages",
+    "django_prometheus",
     ## all auth
     "allauth",
     "allauth.account",
@@ -91,6 +92,7 @@ CORS_ALLOW_HEADERS = [
 
 
 MIDDLEWARE = [
+    "django_prometheus.middleware.PrometheusBeforeMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -100,6 +102,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     # "config.middleware.ExceptionMiddleware",
+    "request_logging.middleware.LoggingMiddleware",
+    "django_prometheus.middleware.PrometheusAfterMiddleware",
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -249,4 +253,49 @@ CACHES = {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
         "LOCATION": f"redis://:{os.environ.get('SESSION_REDIS_PASSWORD')}@{os.environ.get('SESSION_REDIS_HOST')}:{os.environ.get('SESSION_REDIS_PORT')}",
     }
+}
+
+# logging
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    # Formatter
+    "formatters": {
+        "basic_format": {
+            "format": "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            "datefmt": "%d/%b/%Y %H:%M:%S",
+        },
+    },
+    # Handler
+    "handlers": {
+        # 파일 출력
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": "../logs/app.log",
+            "maxBytes": 1024 * 1024 * 15,  # 15MB
+            "backupCount": 10,
+            "formatter": "basic_format",
+        },
+        # 콘솔 출력
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "basic_format",
+        },
+    },
+    # 로거
+    "loggers": {
+        # 웹 앱에 대해 출력
+        "web": {
+            "handlers": ["console", "file"],
+            "level": "INFO",
+        },
+        # 요청 출력
+        "django.request": {
+            "handlers": ["console", "file"],
+            "level": "INFO",
+            "propagate": False,
+        },
+    },
 }

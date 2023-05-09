@@ -1,3 +1,5 @@
+import logging
+
 from django.db.models import Avg
 from django.http import JsonResponse
 from django.views import View
@@ -5,6 +7,8 @@ from django.views.generic import TemplateView
 
 from web.models import Recommendation, Restaurant
 from web.views.service.search import RestaurantSearch
+
+logger = logging.getLogger(__name__)
 
 
 class IndexView(TemplateView):
@@ -23,6 +27,8 @@ class IndexView(TemplateView):
             .filter(average_ratings__gte=0)
             .order_by("-average_ratings")[:4]
         )
+
+        logger.info("recommendations: %d", len(recommendations))
 
         return {
             "recommendations": recommendations,
